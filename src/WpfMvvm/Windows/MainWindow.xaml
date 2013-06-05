@@ -1,0 +1,60 @@
+﻿<wv:WindowView x:Class="WpfMvvm.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv="clr-namespace:WpfMvvm.Windows"
+        Height="481"
+        Width="525"
+        Title="WPF MVVM Demo">
+    <Grid Margin="5">
+        <StackPanel>
+            <TextBlock 
+                Margin="0,0,0,5"
+                Text="{Binding DemoText}"
+                TextWrapping="Wrap" />
+            
+            <Button Command="{Binding ChangeTextCommand}">Change text</Button>
+            
+            <TextBlock
+                Margin="0,20,0,5"
+                TextWrapping="Wrap">
+                Clicking the Open Window button will instruct the window service top open a new Window for a given ViewModel type. The window service will search for the appropriate window, before instantiating the view model through the container (and injecting any dependencies) and injecting the view model instance as the data context for that window.
+            </TextBlock>
+            
+            <Button Command="{Binding OpenWindowCommand}">Open a new Window</Button>
+
+            <TextBlock 
+                Margin="0,20,0,5"
+                TextWrapping="Wrap">
+                Clicking this button will do the same as the above, only the widow will be opened as a dialog, meaning that the parent window cannot be focused until the child window is closed.
+            </TextBlock>
+
+            <Button Command="{Binding OpenDialogCommand}">Open a new dialog Window</Button>
+
+
+            <TextBlock 
+                Text="{Binding ModelText}"
+                Margin="0,20,0,5"
+                TextWrapping="Wrap" />
+
+
+            <TextBlock 
+                Margin="0,20,0,5"
+                TextWrapping="Wrap">
+                This shows how we use a two way binding to get information back from the Window, type your name into the text box for a personalised greeting.
+            </TextBlock>
+
+            <TextBox Text="{Binding NameInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            
+            <TextBlock Text="{Binding GreetingText}" />
+
+            <TextBlock 
+                Margin="0,20,0,5"
+                TextWrapping="Wrap">
+                This makes use of the Messagebox Service to show a native Windows message box.
+            </TextBlock>
+
+            <Button Command="{Binding ShowMessageCommand}">Show message</Button>
+
+        </StackPanel>
+    </Grid>
+</wv:WindowView>
