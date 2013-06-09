@@ -76,10 +76,17 @@
     <Compile Include="Services\IMessageboxService.cs" />
     <Compile Include="Services\MessageboxService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Windows\AlternativeWindow.xaml.cs">
+      <DependentUpon>AlternativeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WindowView.cs" />
     <Compile Include="Services\IWindowService.cs" />
     <Compile Include="Services\WindowService.cs" />
     <Compile Include="WpfMvvmApplication.cs" />
+    <Page Include="Windows\AlternativeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

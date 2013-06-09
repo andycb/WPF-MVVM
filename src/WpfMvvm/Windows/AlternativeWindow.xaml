@@ -1,0 +1,23 @@
+﻿<wv:WindowView x:Class="WpfMvvm.Windows.AlternativeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv="clr-namespace:WpfMvvm.Windows"
+        Title="AlternativeWindow" 
+        Height="200" 
+        Width="541">
+    <Grid Margin="5">
+        <StackPanel>
+            <TextBlock
+                TextWrapping="Wrap">
+                This is a completely separate Window View, however as the view name override was specified when opening the Window through the Window service, it shares the same view model type as the MainView (note, it is a different instance of the view model).
+            </TextBlock>
+            
+            <TextBlock 
+                Margin="0,10,0,5"
+                Text="{Binding DemoText}"
+                TextWrapping="Wrap" />
+
+            <Button Command="{Binding ChangeTextCommand}">Change text</Button>
+        </StackPanel>
+    </Grid>
+</wv:WindowView>

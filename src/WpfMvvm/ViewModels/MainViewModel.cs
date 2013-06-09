@@ -136,6 +136,17 @@ namespace WpfMvvm.ViewModels
         }
 
         /// <summary>
+        /// Gets the open alternative window command
+        /// </summary>
+        public ICommand OpenAlternativeWindowCommand
+        {
+            get
+            {
+                return new RelayCommand(() => this.windowService.OpenWindow<MainViewModel>("AlternativeWindow"));
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the user's name
         /// </summary>
         public string NameInput

@@ -9,7 +9,17 @@
     public class StubWindowService : IWindowService
     {
         /// <inheritdoc />
+        public void OpenWindow<T>(string viewName, object model = null) where T : ViewModelBase
+        {
+        }
+
+        /// <inheritdoc />
         public void OpenWindow<T>(object model = null) where T : ViewModelBase
+        {
+        }
+
+        /// <inheritdoc />
+        public void OpenDialog<T>(string viewName, object model = null) where T : ViewModelBase
         {
         }
 

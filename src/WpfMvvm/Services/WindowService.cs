@@ -16,15 +16,27 @@
     public class WindowService : IWindowService
     {
         /// <inheritdoc />
+        public void OpenWindow<T>(string viewName, object model = null) where T : ViewModelBase
+        {
+            FindWindow<T>(viewName, model).Show();
+        }
+
+        /// <inheritdoc />
         public void OpenWindow<T>(object model = null) where T : ViewModelBase
         {
-            FindWindow<T>(model).Show();
+            FindWindow<T>(null, model).Show();
+        }
+
+        /// <inheritdoc />
+        public void OpenDialog<T>(string viewName, object model = null) where T : ViewModelBase
+        {
+            FindWindow<T>(viewName, model).ShowDialog();
         }
 
         /// <inheritdoc />
         public void OpenDialog<T>(object model = null) where T : ViewModelBase
         {
-            FindWindow<T>(model).ShowDialog();
+            FindWindow<T>(null, model).ShowDialog();
         }
 
         /// <summary>
@@ -33,15 +45,27 @@
         /// <typeparam name="T">
         /// The type of view model
         /// </typeparam>
+        /// <param name="viewName">
+        /// The view name
+        /// </param>
         /// <param name="model">
         /// The model
         /// </param>
         /// <returns>The window</returns>
-        private WindowView FindWindow<T>(object model) where T : ViewModelBase
+        private WindowView FindWindow<T>(string viewName, object model) where T : ViewModelBase
         {
+            var windowName = string.Empty;
             var viewModelName = typeof(T).Name;
-            var windowName = viewModelName.Substring(0, viewModelName.Length - 9) + "Window";
-            Debug.WriteLine(string.Format("WindowService.FindWindow :: Looking for window '{0}' for view model '{1}'", viewModelName, windowName));
+            if (!string.IsNullOrEmpty(viewName))
+            {
+                windowName = viewName;
+            }
+            else
+            {
+                windowName = viewModelName.Substring(0, viewModelName.Length - 9) + "Window";
+            }
+
+            Debug.WriteLine(string.Format("WindowService.FindWindow :: Looking for window '{0}' for view model '{1}', view name override = '{2}'", windowName, viewModelName, viewName));
 
             var windowType = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(t => typeof(WindowView).IsAssignableFrom(t) && t.Name == windowName);
             if (windowType == null)
