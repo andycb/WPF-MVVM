@@ -72,6 +72,7 @@
     <Compile Include="DependencyContainer.cs" />
     <Compile Include="Entities\MessageboxKind.cs" />
     <Compile Include="Entities\MessageboxResponce.cs" />
+    <Compile Include="Messages\ShowTextMessage.cs" />
     <Compile Include="Models\SampleModel.cs" />
     <Compile Include="Services\IMessageboxService.cs" />
     <Compile Include="Services\MessageboxService.cs" />

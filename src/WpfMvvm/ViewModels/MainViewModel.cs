@@ -5,6 +5,7 @@ namespace WpfMvvm.ViewModels
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
     using WpfMvvm.Entities;
+    using WpfMvvm.Messages;
     using WpfMvvm.Models;
     using WpfMvvm.Services;
 
@@ -61,7 +62,15 @@ namespace WpfMvvm.ViewModels
             this.messageboxService = messageboxService;
             this.model = (SampleModel)model;
 
-            this.Set(() => this.DemoText, ref this.demoText, "This text is bound to a property on the view model, when you click the button the view model will change the value using the Set() method. This will automatically call RaisePropertyChanged on the property and cause the UI to update.");
+            //// You may expect this to cause a memory leak, without un-registering, but as the Window is closed the entire View Model is automatically unregistered from the Messenger.
+            //// You could, of course use this.MessengerInstance.UnRegister() if you needed to do this prematurely for some reason.
+            ////
+            //// Note: If this View Model is bound to a view other than a WindowView, cleanup will NOT automatically be called when the window is closed; you will have to make you own arrangements.
+            //// Personally, I would recommend that if this VM is embedded in a VM that is bound to a PageView, you let the parent view model handle message registrations and pass the actions onto the
+            //// child VM by exposing methods. That way, you leverage the automatic clean up that you get for free, and the reduce the risk of leaving an unexpected message registration behind for the lifetime of the app.
+            this.MessengerInstance.Register<ShowTextMessage>(this, m => { this.DemoText = m.Text; });
+
+            this.DemoText = "This text is bound to a property on the view model, when you click the button the view model will change the value using the Set() method. This will automatically call RaisePropertyChanged on the property and cause the UI to update.";
         }
 
         /// <summary>
@@ -87,7 +96,7 @@ namespace WpfMvvm.ViewModels
 
             private set
             {
-                this.demoText = value;
+                this.Set(() => this.DemoText, ref this.demoText, value);
             }
         }
 
@@ -143,6 +152,17 @@ namespace WpfMvvm.ViewModels
             get
             {
                 return new RelayCommand(() => this.windowService.OpenWindow<MainViewModel>("AlternativeWindow"));
+            }
+        }
+
+        /// <summary>
+        /// Gets the send message command
+        /// </summary>
+        public ICommand SendMessageCommand
+        {
+            get
+            {
+                return new RelayCommand(() => this.MessengerInstance.Send(new ShowTextMessage("This text was changed via a message.")));
             }
         }
 
